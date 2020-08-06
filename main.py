@@ -119,7 +119,7 @@ def run_selenium_server(driver):
         shutil.rmtree('images',ignore_errors=True)
         os.mkdir('images')
         img_url = ob.get_element(driver,elem,'images')
-        print(img_url)
+        #print(img_url)
         os.chdir('images')
         os.remove('clipping_shot.png')
         head_tail = os.path.split(img_url)
