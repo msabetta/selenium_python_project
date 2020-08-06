@@ -5,6 +5,9 @@ from Screenshot import Screenshot_Clipping
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 # This is a sample Python script.
 # Press Maiusc+F10 to execute it or replace it with your code.
@@ -100,9 +103,9 @@ def run_selenium_server(driver):
     driver.get('https://www.almaviva.it/it_IT/Societa-del-gruppo/AlmavivA_Digitaltec')
     print("Page: " + driver.title)
     ob = Screenshot_Clipping.Screenshot()
-
-    if driver.find_element_by_xpath('//*[@id="cookie"]/a/span').is_displayed() == True:
-        driver.find_element_by_xpath('//*[@id="cookie"]/a/span').click()
+    element = driver.find_element_by_xpath('/html/body/div/div[8]/a/span')
+    if element.is_displayed() == True:
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div[8]/a/span"))).click()
 
     elem = driver.find_element_by_xpath('/html/body/div/div[5]/div[1]/picture/img')
 
@@ -119,7 +122,7 @@ def run_selenium_server(driver):
         shutil.rmtree('images',ignore_errors=True)
         os.mkdir('images')
         img_url = ob.get_element(driver,elem,'images')
-        print(img_url)
+        #print(img_url)
         os.chdir('images')
         os.remove('clipping_shot.png')
         head_tail = os.path.split(img_url)
@@ -135,6 +138,8 @@ if __name__ == '__main__':
     #driver = webdriver.Chrome(r"C:\Users\M.Sabetta\.wdm\drivers\chromedriver\win32\84.0.4147.30/chromedriver.exe")
     opt = Options()
     opt.page_load_strategy = 'normal'
+    opt.add_argument('--ignore-certificate-errors')
+    opt.add_argument('--ignore-ssl-errors')
     driver = webdriver.Chrome(r"./chromedriver/chromedriver.exe",options=opt)
     run_selenium_server(driver)
     time.sleep(5)
