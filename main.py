@@ -23,30 +23,7 @@ def run_selenium_server(driver):
     # Store the ID of the original window
     original_window = driver.current_window_handle
 
-    # Access each dimension individually
-    position = driver.get_window_position()
-    msg_pos = 'Window position: ' + str(position)
-    print(msg_pos)
-    x = position.get('x')
-    y = position.get('y')
-
-    # Or store the dimensions and query them later
-    size = driver.get_window_size()
-    width = size.get("width")
-    height = size.get("height")
-    print('Window size: ' + str(size))
-    print('Width: ' + str(width))
-    print('Height: ' + str(height))
-
-    driver.set_window_size(1024, 768)
-
-    size = driver.get_window_size()
-    width = size.get("width")
-    height = size.get("height")
-
-    print('Window size: ' + str(size))
-    print('Width: ' + str(width))
-    print('Height: ' + str(height))
+    check_window_size(driver)
 
     # Check we don't have other windows open already
     assert len(driver.window_handles) == 1
@@ -93,6 +70,9 @@ def run_selenium_server(driver):
 
     driver.get("http://www.msn.it")
     print("Page: " + driver.title)
+    time.sleep(5)
+    driver.find_element_by_id("onetrust-accept-btn-handler").click()
+    time.sleep(5)
     driver.find_element_by_xpath('//*[@id="main"]/div[3]/div/div/div[3]/ul/li[7]/a').click()
     time.sleep(5)
     driver.back()
@@ -128,7 +108,57 @@ def run_selenium_server(driver):
         head_tail = os.path.split(img_url)
         img = 'palace.png'
         os.rename(head_tail[1],img)
-        print(head_tail[0]+'\\'+ img )
+        print(head_tail[0]+'\\'+ img)
+
+        #login_into_facebook(driver,"mariorossi@gmail.com", "AlfaRomeo")
+
+
+def check_window_size(driver):
+    # Access each dimension individually
+    position = driver.get_window_position()
+    msg_pos = 'Window position: ' + str(position)
+    print(msg_pos)
+    x = position.get('x')
+    y = position.get('y')
+    # Or store the dimensions and query them later
+    size = driver.get_window_size()
+    width = size.get("width")
+    height = size.get("height")
+    print('Window size: ' + str(size))
+    print('Width: ' + str(width))
+    print('Height: ' + str(height))
+    driver.set_window_size(1024, 768)
+    size = driver.get_window_size()
+    width = size.get("width")
+    height = size.get("height")
+    print('Window size: ' + str(size))
+    print('Width: ' + str(width))
+    print('Height: ' + str(height))
+    driver.maximize_window()
+
+
+def login_into_facebook(driver,user_name_value,pass_value):
+    driver.get("https://www.facebook.com")
+    print("Page: " + driver.title)
+    time.sleep(1)
+    username = driver.find_element_by_id("email")
+    time.sleep(1)
+    password = driver.find_element_by_id("pass")
+    time.sleep(1)
+    submit = driver.find_element_by_name("login")
+    time.sleep(1)
+
+    username.send_keys(user_name_value)
+    time.sleep(2)
+    password.send_keys(pass_value)
+    time.sleep(2)
+    submit.click()
+    time.sleep(2)
+
+    wait = WebDriverWait(driver, 5)
+    page_title = driver.title
+
+    assert page_title == "Facebook"
 
 # Press the green button in the gutter to run the script.
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
