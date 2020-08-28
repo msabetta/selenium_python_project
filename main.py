@@ -4,7 +4,6 @@ import os
 from Screenshot import Screenshot_Clipping
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -166,7 +165,7 @@ if __name__ == '__main__':
     print_hi('Selenium Tester')
     #https://stackoverflow.com/questions/42478591/python-selenium-chrome-webdriver
     #driver = webdriver.Chrome(r"C:\Users\M.Sabetta\.wdm\drivers\chromedriver\win32\84.0.4147.30/chromedriver.exe")
-    opt = Options()
+    opt = webdriver.ChromeOptions()
     opt.page_load_strategy = 'normal'
     opt.add_argument('--ignore-certificate-errors')
     opt.add_argument('--ignore-ssl-errors')
