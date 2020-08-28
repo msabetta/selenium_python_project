@@ -17,6 +17,7 @@ Esecuzione del codice di progetto con Selenium (main.py):
 
 Esecuzione del codice di progetto con Selenium e Pytest (pytest_example.py):
 - lanciare il comando "pytest --driver Chrome pytest_example.py"  (esecuzione del codice con Google Chrome)
+- lanciare il comando "pytest --driver Firefox --wdropt firefox pytest_example.py " (esecuzione del codice con Mozilla Firefox)
 
 Esecuzione del codice di progetto con Selenium e Pytest con l'utilizzo della piattaforma Gridlastic (test_unittest.py)
 - Dalla pagina web "https://www.gridlastic.com/grid-configuration.php" avviare Gridlastic cliccare sul tasto "Start Grid"
