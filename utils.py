@@ -1,6 +1,7 @@
 import os
 import time
 import shutil
+import chromedriver_autoinstaller
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver import ActionChains, DesiredCapabilities
@@ -11,17 +12,17 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from Screenshot import Screenshot_Clipping
 
-
 def setup():
     global driver
     global action
+    chromedriver_filepath = chromedriver_autoinstaller.install()
     d = DesiredCapabilities.CHROME
     d['goog:loggingPrefs'] = {'browser': 'ALL'}
     opt = webdriver.ChromeOptions()
     opt.page_load_strategy = 'normal'
     opt.add_argument('--ignore-certificate-errors')
     opt.add_argument('--ignore-ssl-errors')
-    driver = webdriver.Chrome(r"C:\chromedriver\chromedriver.exe", desired_capabilities=d, options=opt)
+    driver = webdriver.Chrome(chromedriver_filepath, desired_capabilities=d, options=opt)
     action = ActionChains(driver)
     driver.delete_all_cookies()
     set_window_size(1024, 768)
@@ -183,7 +184,10 @@ def quit_sessions():
 
 def search_word_from_google(word):
     get_page("http://www.google.com")
-    manage_iframe('#cnsw > iframe', '#introAgreeButton > span > span')
+    #manage_iframe('#cnsw > iframe', '#introAgreeButton > span > span')
+    window = find_element_by_css_selector('#Sx9Kwc > div.jw8mI > span > div > div')
+    if window.is_displayed():
+        find_element_by_css_selector('#zV9nZe > div').click()
     fill_field_by_name_and_return('q', word)
     get_page_title()
 
