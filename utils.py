@@ -12,6 +12,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from Screenshot import Screenshot_Clipping
 
+
 def setup():
     global driver
     global action
